@@ -1,1 +1,62 @@
 
+Trigger Template from slides:
+CREATE TRIGGER <name>
+BEFORE | AFTER | INSTEAD OF <events>
+[<referencing clause>]
+[FOR EACH ROW]
+[WHEN (<condition>)]
+<action>
+
+
+1) Write a trigger on MySQL with the workson data set (testing in your own database) that increases the budget of a project whenever a record is inserted in workson table. Increase the budget by $1,000.
+
+CREATE TRIGGER increaseBudgetTrigger
+AFTER INSERT ON workson
+FOR EACH ROW
+BEGIN
+//  DECLARE oldProjBudget DECIMAL(9,2);
+  DECLARE newProjBudget DECIMAL(9,2);
+
+  SELECT budget INTO newProjBudget
+  FROM proj
+  WHERE pno = NEW.pno;
+
+//  SELECT budget INTO oldProjBudget
+//  FROM proj
+//  WHERE pno = NEW.pno;
+
+//  IF oldProjBudget < newProjBudget THEN
+    SET newProjBudget = newProjBudget + 1000;
+
+  UPDATE proj
+  SET budget = newProjBudget
+  WHERE pno = NEW.pno;
+
+END IF;
+END;
+
+// I have oldProjBudget as a thing because his slides show the need for referencing old and new, but if we are inserting a row idk if that still matters + referencing doesnt work for MySQL so im double unsure)
+
+
+2) Write a trigger on MySQL with the workson data set (testing in your own database) that sets the salary of a new employee to be $5,000 more than the average salary of employees with that title whenever an employee is inserted with a salary less than $50,000. For example, if employee 'E10' called 'P. Person' with title 'ME' is inserted with a salary of $35,000, then the salary should be changed to $45,000 (average salary of 'ME' employees is $40,000)
+
+CREATE TRIGGER salaryTrigger
+BEFORE INSERT ON emp
+FOR EACH ROW
+BEGIN
+  DECLARE avgSalary DECIMAL (9,2);
+
+  SELECT AVG(salary) INTO avgSalary
+  FROM emp
+  WHERE title = NEW.title;
+
+  IF NEW.salary < 50000 THEN
+    SET NEW.salary = avgSalary + 5000
+
+  END IF;
+END;
+
+<action>
+
+
+
