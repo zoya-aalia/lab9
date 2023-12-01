@@ -1,0 +1,16 @@
+// Create a single, valid JSON document that stores the information of the dept and proj tables in the workson database.
+
+{
+  "departments": [ {  "dno": "D1", "dname": "Management", "mgreno": "E8" },
+                   {  "dno": "D2", "dname": "Consulting", "mgreno": "E7" },
+                   {  "dno": "D3", "dname": "Accounting", "mgreno": "E5" },
+                   {  "dno": "D4", "dname": "Development", "mgreno": null }
+  ],
+
+  "projects": [ { "pno": "P1", "pname": "Instruments", "budget": 150000, "dno": "D1" },
+                { "pno": "P2", "pname": "DB Develop",  "budget": 135000, "dno": "D2" },
+                { "pno": "P3", "pname": "Budget", "budget": 250000, "dno": "D3" },
+                { "pno": "P4", "pname": "Maintenance", "budget": 310000, "dno": "D2" },
+                { "pno": "P5", "pname": "CAD/CAM", "budget": 500000, "dno": "D2" }
+  ]
+}
