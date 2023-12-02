@@ -1,8 +1,8 @@
 1) Write a CREATE VIEW statement for the workson database called deptSummary that has the department number, name, count of employees in the department, and total employee salaries
 
 CREATE VIEW deptSummary AS
-SELECT d.dno AS dno,
-       d.dname AS dname,
+SELECT d.dno,
+       d.dname,
        COUNT(e.eno) AS totalEmp,
        SUM(e.salary) AS totalSalary
 FROM dept d
@@ -15,15 +15,11 @@ SELECT * FROM deptSummary;
 2) Write a CREATE VIEW statement for workson database called empSummary that has the employee number, name, salary, birthdate, department, count of projects worked on for the employee and the total hours worked. Only show employees in 'D1', 'D2', or 'D3' and with birthdate after '1966-06-08'
 
 CREATE VIEW empSummary AS
-SELECT e.eno AS eno,
-       e.ename AS ename,
-       e.salary AS salary,
-       e.bdate AS birthdate,
-       d.dno AS dno,
+SELECT e.eno, e.ename, e.salary, e.bdate, d.dno,
        COUNT(w.pno) AS totalProj,
        SUM(w.hours) AS totalHours
 FROM emp e
-JOIN workson w ON e.eno = w.eno
+LEFT JOIN workson w ON e.eno = w.eno
 JOIN dept d ON e.dno = d.dno
 WHERE e.dno IN ('D1', 'D2', 'D3') AND e.bdate > '1966-06-08'
 GROUP BY e.eno, e.ename, e.salary, e.bdate, d.dname;
